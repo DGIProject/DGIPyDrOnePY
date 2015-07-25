@@ -7,8 +7,8 @@ import time
 import socket
 import threading
 
-#ser = serial.Serial('/dev/ttyACM0', 9600)
-ser = serial.Serial('COM5', 9600)
+#ser = serial.Serial('/dev/ttyACM0', 115200)
+ser = serial.Serial('COM5', 115200)
 
 print(ser)
 
@@ -31,19 +31,20 @@ def mainThread():
 
         command = data.decode() + "\r"
 
+        print('command', command)
+
         if command != lastCommand:
             print("sendCommand")
 
             lastCommand = command
 
-            print('command', command)
             ser.write(command.encode())
 
         #i = i + 1
 
         #print(i)
 
-        s.send(str("D SEND").encode())
+        #s.send(str("D SEND").encode())
     #s.close()
 
 def receiveThread():
@@ -51,7 +52,7 @@ def receiveThread():
     while True:
         line = ser.readline().decode()
 
-        print(line)
+        #print(line)
 
         s.send(str(line).encode())
 

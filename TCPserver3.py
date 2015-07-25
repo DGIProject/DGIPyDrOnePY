@@ -32,14 +32,16 @@ def clientthread(connection):
             if commandSplit[0] == "C":
                 print("CONTROLLER")
 
-                lastCommand = command[1] + " " + command[2]
+                lastCommand = commandSplit[1] + " " + commandSplit[2]
+
+                print("lastCommand", lastCommand)
 
                 connection.send(lastProperties.encode())
             elif commandSplit[0] == "D":
                 print("DRONE")
 
                 if commandSplit[1] != "SEND":
-                    lastProperties = command[1]
+                    lastProperties = commandSplit[1] + " " + commandSplit[2]
 
                     connection.send(lastCommand.encode())
             else:
