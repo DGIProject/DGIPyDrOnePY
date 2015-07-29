@@ -33,18 +33,18 @@ def mainThread():
 
         print('command', command)
 
-        if command != lastCommand:
-            print("sendCommand")
+        #if command != lastCommand:
+            #print("sendCommand")
 
-            lastCommand = command
+            #lastCommand = command
 
-            ser.write(command.encode())
+        ser.write(command.encode())
 
         #i = i + 1
 
         #print(i)
 
-        #s.send(str("D SEND").encode())
+        s.send(str("D SEND").encode())
     #s.close()
 
 def receiveThread():
