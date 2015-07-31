@@ -32,7 +32,7 @@ def clientthread(connection):
             if commandSplit[0] == "C":
                 print("CONTROLLER")
 
-                lastCommand = commandSplit[1] + " " + commandSplit[2]
+                lastCommand = commandSplit[1] + " " + commandSplit[2] + " " + commandSplit[3]
 
                 print("lastCommand", lastCommand)
 
