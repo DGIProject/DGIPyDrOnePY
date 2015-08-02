@@ -36,14 +36,19 @@ test = serial_ports()
 
 print(test)
 
-ser = serial.Serial(serial_ports()[0], 115200)
+ser = serial.Serial(serial_ports()[1], 115200)
 #ser = serial.Serial('COM5', 115200)
 
 print(ser)
 
 sleep(5)
 
-TCP_IP = '192.168.95.20'
+ip = open("ip.info", "r")
+
+TCP_IP = ip.readline()
+
+ip.close()
+
 TCP_PORT = 5005
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -79,11 +84,12 @@ def mainThread():
 def receiveThread():
     print("receiveThread")
     while True:
-        line = ser.readline().decode('utf-8')
-
-        #print(line)
-
-        s.send(str(line).encode())
+        try:
+            line = ser.readline().decode('utf-8')
+            #print(line)
+            s.send(str(line).encode())
+        except serial.SerialException as e:
+            return
 
 th1 = threading.Thread(target=mainThread)
 th1.start()
