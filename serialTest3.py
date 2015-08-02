@@ -1,20 +1,49 @@
-__author__ = 'Dylan'
+_author__ = 'Dylan'
 
 from time import sleep
 import serial
 import sys
+import glob
 import time
 import socket
 import threading
 
-#ser = serial.Serial('/dev/ttyACM0', 115200)
-ser = serial.Serial('COM5', 115200)
+def serial_ports():
+    if sys.platform.startswith('win'):
+        ports = ['COM' + str(i + 1) for i in range(256)]
+
+    elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+        # this is to exclude your current terminal "/dev/tty"
+        ports = glob.glob('/dev/tty[A-Za-z]*')
+
+    elif sys.platform.startswith('darwin'):
+        ports = glob.glob('/dev/tty.*')
+
+    else:
+        raise EnvironmentError('Unsupported platform')
+
+    result = []
+    for port in ports:
+        try:
+            s = serial.Serial(port)
+            s.close()
+            result.append(port)
+        except (OSError, serial.SerialException):
+            pass
+    return result
+
+test = serial_ports()
+
+print(test)
+
+ser = serial.Serial(serial_ports()[0], 115200)
+#ser = serial.Serial('COM5', 115200)
 
 print(ser)
 
 sleep(5)
 
-TCP_IP = '127.0.0.1'
+TCP_IP = '192.168.95.20'
 TCP_PORT = 5005
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -50,7 +79,7 @@ def mainThread():
 def receiveThread():
     print("receiveThread")
     while True:
-        line = ser.readline().decode()
+        line = ser.readline().decode('utf-8')
 
         #print(line)
 

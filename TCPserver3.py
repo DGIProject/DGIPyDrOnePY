@@ -3,7 +3,7 @@ __author__ = 'Dylan'
 from socket import *
 import threading
 
-host = '127.0.0.1'
+host = '192.168.95.20'
 port = 5005
 
 #Creating socket object
@@ -35,6 +35,10 @@ def clientthread(connection):
                 lastCommand = commandSplit[1] + " " + commandSplit[2] + " " + commandSplit[3]
 
                 print("lastCommand", lastCommand)
+
+		#f = open('command.txt','w')
+		#f.write(lastCommand)
+		#f.close()
 
                 connection.send(lastProperties.encode())
             elif commandSplit[0] == "D":
