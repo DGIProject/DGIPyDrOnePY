@@ -36,7 +36,7 @@ test = serial_ports()
 
 print(test)
 
-ser = serial.Serial(serial_ports()[1], 115200)
+ser = serial.Serial(serial_ports()[0], 115200)
 #ser = serial.Serial('COM5', 115200)
 
 print(ser)

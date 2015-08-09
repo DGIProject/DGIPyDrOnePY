@@ -18,7 +18,7 @@ sockServer.bind((host, port))
 #Listening at the address
 sockServer.listen(5) #5 denotes the number of clients can queue
 
-lastCommand = "P 0|0|0|0|0"
+lastCommand = "P 0|0|0|0|0 0"
 lastProperties = "D 0|0|0|0|0|0|0|0|0|12|0|0|0"
 
 def clientthread(connection):
