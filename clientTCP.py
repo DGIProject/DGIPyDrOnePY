@@ -1,23 +1,25 @@
-#!/usr/bin/env python
-
 import socket
+from time import sleep
 
+ip = open("ip.info", "r")
 
-TCP_IP = '127.0.0.1'
+TCP_IP = ip.readline()
+
+ip.close()
+
+port = 5005
+
 TCP_PORT = 5005
 BUFFER_SIZE = 1024
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.connect((TCP_IP, TCP_PORT))
 
-while 1:
-    motors = input('motors ?')
-
-    command = "C P " + motors + "|0|0|0"
-
-    s.send(command.encode())
+for x in range(0, 5):
+    s.send("C H Y 0".encode())
 
     #data = s.recv(BUFFER_SIZE)
     #print("received data:", data)
+    sleep(1)
 
 s.close()

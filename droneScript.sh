@@ -14,7 +14,13 @@ isBuzzing=false
 timeStart=$(cat /proc/uptime | cut -d'.' -f1)
 timeEnd=0
 
+firstTimeStart=true
 firstTime=true
+
+cd /root/DGIPyDrOnePY/
+
+rm ip.info
+echo `ifconfig wlan0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'` > ip.info
 
 while true; do
  value=$(gpio read 0)
@@ -28,18 +34,25 @@ while true; do
   if [ $gapTime -ge 10 ]
   then
    echo "--DRONESCRIPT-- reboot server"
-   #reboot
+   reboot
   elif [ $gapTime -ge 5 ]
   then
    echo "--DRONE SCRIPT-- halt server"
-   #halt
+   halt
   else
-   echo "--DRONE SCRIPT-- stop scripts, wait 120 seconds"
-   #./killAll.sh
-   ./sleepBuzzer.sh 5
+   if [ $firstTimeStart = true ]
+   then
+    echo "--DRONE SCRIPT-- first time"
+
+    firstTimeStart=false
+   else
+    echo "--DRONE SCRIPT-- stop scripts, wait 120 seconds"
+    ./killAll.sh
+    ./sleepBuzzer.sh 120
+   fi
 
    echo "--DRONE SCRIPT-- start scripts"
-   #./startAll.sh
+   ./startAll.sh
   fi
 
   firstTime=false
