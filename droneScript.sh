@@ -47,12 +47,12 @@ while true; do
     firstTimeStart=false
    else
     echo "--DRONE SCRIPT-- stop scripts, wait 120 seconds"
-    ./killAll.sh
+    ./killAll.sh > log/killAll.log
     ./sleepBuzzer.sh 120
    fi
 
    echo "--DRONE SCRIPT-- start scripts"
-   ./startAll.sh
+   ./startScriptsDrone.sh
   fi
 
   firstTime=false

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cd /root/DGIPyDrOnePY/
+
+./droneScript.sh > log/droneScript.log &
