@@ -2,6 +2,8 @@ __author__ = 'Dylan'
 
 from socket import *
 import threading
+import subprocess
+import shlex
 
 ip = open("ip.info", "r")
 
@@ -37,11 +39,25 @@ def clientthread(connection):
             if commandSplit[0] == "C":
                 print("CONTROLLER")
 
-                lastCommand = commandSplit[1] + " " + commandSplit[2] + " " + commandSplit[3]
-
+                #lastCommand = commandSplit[1] + " " + commandSplit[2] + " " + commandSplit[3]
+		lastCommand = commandSplit[1] + " " + commandSplit[2]
                 print("lastCommand", lastCommand)
 
-                connection.send(lastProperties.encode())
+		subprocess.call(shlex.split('./sendCommandArduino.sh \"' + lastCommand + '\"'))
+
+		properties = open("lastProperties.txt", "r")
+
+		lastProperties2 = properties.readline()
+		
+		print('\"' + lastProperties2 + '\"')
+
+		properties.close()
+		
+		if lastProperties2 != "":
+			lastProperties2Split = lastProperties2.split()
+			lastProperties = lastProperties2Split[1] + " " + lastProperties2Split[2]
+                	
+		connection.send(lastProperties.encode())
             elif commandSplit[0] == "D":
                 print("DRONE")
 

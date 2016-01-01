@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd /root/DGIPyDrOnePY/
+cd "PATH TO YOUR PY FOLDER"
 
-./droneScript.sh > log/droneScript.log &
+./droneScript.sh > logs/droneScript.log &

@@ -1,9 +1,9 @@
 #!/bin/sh
 
-gpio mode 0 in
+/usr/local/bin/gpio mode 0 in
 
-gpio mode 27 out
-gpio mode 28 out
+/usr/local/bin/gpio mode 27 out
+/usr/local/bin/gpio mode 28 out
 
 isPressed=false
 firstTimePressed=false
@@ -23,7 +23,7 @@ rm ip.info
 echo `ifconfig wlan0 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'` > ip.info
 
 while true; do
- value=$(gpio read 0)
+ value=$(/usr/local/bin/gpio read 0)
 
  if [ $isPressed = false ] && [ $firstTime = true ]
  then
@@ -47,7 +47,7 @@ while true; do
     firstTimeStart=false
    else
     echo "--DRONE SCRIPT-- stop scripts, wait 120 seconds"
-    ./killAll.sh > log/killAll.log
+    ./killAll.sh > logs/killAll.log
     ./sleepBuzzer.sh 120
    fi
 
@@ -85,11 +85,11 @@ while true; do
 
    if [ $isBuzzing = true ]
    then
-    gpio write 27 1
-    gpio write 28 1
+    /usr/local/bin/gpio write 27 1
+    /usr/local/bin/gpio write 28 1
    else
-    gpio write 27 0
-    gpio write 28 0
+    /usr/local/bin/gpio write 27 0
+    /usr/local/bin/gpio write 28 0
    fi
   elif [ $gapTime -ge 5 ]
   then
@@ -103,11 +103,11 @@ while true; do
 
    if [ $isBuzzing = true ]
    then
-    gpio write 27 1
-    gpio write 28 1
+    /usr/local/bin/gpio write 27 1
+    /usr/local/bin/gpio write 28 1
    else
-    gpio write 27 0
-    gpio write 28 0
+    /usr/local/bin/gpio write 27 0
+    /usr/local/bin/gpio write 28 0
    fi
   else
    if [ $countBuzzer -ge 15 ]
@@ -120,11 +120,11 @@ while true; do
 
    if [ $isBuzzing = true ]
    then
-    gpio write 27 1
-    gpio write 28 1
+    /usr/local/bin/gpio write 27 1
+    /usr/local/bin/gpio write 28 1
    else
-    gpio write 27 0
-    gpio write 28 0
+    /usr/local/bin/gpio write 27 0
+    /usr/local/bin/gpio write 28 0
    fi
   fi
 
@@ -136,11 +136,11 @@ while true; do
 
   if [ $countBuzzer -lt 10 ]
   then
-   gpio write 27 1
-   gpio write 28 1
+   /usr/local/bin/gpio write 27 1
+   /usr/local/bin/gpio write 28 1
   else
-   gpio write 27 0
-   gpio write 28 0
+   /usr/local/bin/gpio write 27 0
+   /usr/local/bin/gpio write 28 0
 
    if [ $countBuzzer -gt 100 ]
    then
